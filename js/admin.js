@@ -12,6 +12,10 @@
         }
     })();
 
+    let allData = [];
+    let selected = new Set();
+    let toastTimer = null;
+
     const loginScreen = document.getElementById('login-screen');
     const adminApp = document.getElementById('admin-app');
     const formLogin = document.getElementById('form-login');
