@@ -358,32 +358,52 @@
         bindAdminRowActions(tbody);
     }
 
+    function setTableLoading(loading) {
+        if (loading) {
+            tbody.innerHTML = '<tr><td colspan="12" class="admin-loading">Carregando cotas…</td></tr>';
+            if (adminCotasMobile) {
+                adminCotasMobile.innerHTML = '<p class="admin-loading">Carregando cotas…</p>';
+            }
+        }
+    }
+
     function loadData() {
         return RifaAPI.fetchCotasAdmin().then(function (data) {
             allData = data;
             renderTable();
         }).catch(function (err) {
             var msg = (err && err.message) || 'Erro ao carregar';
-            if (msg.indexOf('JWT') !== -1 || msg.indexOf('auth') !== -1) {
+            if (/JWT|Sessão|auth|Não autorizado|login/i.test(msg)) {
                 showLogin();
+                loginError.textContent = msg;
+                loginError.hidden = false;
             }
             throw err;
         });
     }
 
     function showLogin() {
+        document.body.classList.remove('admin-logged-in');
         loginScreen.hidden = false;
         adminApp.hidden = true;
     }
 
     function showAdmin() {
+        document.body.classList.add('admin-logged-in');
         loginScreen.hidden = true;
         adminApp.hidden = false;
+        loginError.hidden = true;
+        setTableLoading(true);
         loadData().catch(function (err) {
-            showLogin();
+            if (!document.body.classList.contains('admin-logged-in')) return;
             var msg = (err && err.message) || 'Erro ao carregar dados.';
-            loginError.textContent = msg;
-            loginError.hidden = false;
+            if (document.body.classList.contains('admin-logged-in')) {
+                showToast(msg);
+                tbody.innerHTML = '<tr><td colspan="12" class="admin-loading">Não foi possível carregar. Use Atualizar ou Sair.</td></tr>';
+                if (adminCotasMobile) {
+                    adminCotasMobile.innerHTML = '<p class="admin-loading">Erro ao carregar cotas.</p>';
+                }
+            }
         });
     }
 

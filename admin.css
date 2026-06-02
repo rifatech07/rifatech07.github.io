@@ -1,4 +1,21 @@
 /* ── Admin layout ── */
+#login-screen[hidden],
+.login-screen[hidden] {
+    display: none !important;
+}
+
+#admin-app[hidden] {
+    display: none !important;
+}
+
+body.admin-logged-in #login-screen {
+    display: none !important;
+}
+
+body:not(.admin-logged-in) #admin-app {
+    display: none !important;
+}
+
 .login-screen {
     min-height: 100vh;
     display: flex;
@@ -86,6 +103,17 @@
     max-width: 100%;
     margin: 0 auto;
     padding: 0 16px 40px;
+}
+
+.admin-loading {
+    text-align: center;
+    padding: 48px 16px;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+}
+
+.admin-cotas-mobile .admin-loading {
+    padding: 32px 16px;
 }
 
 .admin-topbar {
