@@ -28,10 +28,7 @@
             </div>
             <p class="form-error" id="login-error" hidden></p>
             <button type="submit" class="btn btn--secondary btn--block">Entrar</button>
-            <button type="button" class="btn btn--ghost btn--block btn-help" data-help-trigger title="Ajuda e perguntas frequentes">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <span class="btn-help__label">Ajuda</span>
-            </button>
+            <button type="button" class="login-help-link" data-help-trigger>Precisa de ajuda?</button>
             <a href="https://rifatech07.github.io/index.html" data-site-home class="btn-back">
                 <svg class="btn-back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -53,9 +50,11 @@
             </div>
             <div class="admin-topbar__actions">
                 <a href="comprador.html" class="btn btn--ghost">Ver área do comprador</a>
-                <button type="button" class="btn btn--ghost btn-help" data-help-trigger title="Ajuda e perguntas frequentes" aria-label="Ajuda e perguntas frequentes">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    <span class="btn-help__label">Ajuda</span>
+                <button type="button" class="btn btn--icon" data-help-trigger title="Ajuda" aria-label="Ajuda e perguntas frequentes">
+                    <svg class="icon-help" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <text class="icon-help__mark" x="12" y="12" text-anchor="middle" dominant-baseline="central">?</text>
+                    </svg>
                 </button>
                 <button type="button" id="btn-theme" class="btn btn--icon" title="Modo escuro" aria-label="Modo escuro">
                     <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
