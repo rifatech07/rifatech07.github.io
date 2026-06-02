@@ -1,0 +1,9 @@
+{
+  "name": "rifa-solidaria",
+  "version": "1.0.0",
+  "description": "Rifa solidária — GitHub Pages + Supabase",
+  "private": true,
+  "scripts": {
+    "sync-docs": "powershell -ExecutionPolicy Bypass -File sync-docs.ps1"
+  }
+}

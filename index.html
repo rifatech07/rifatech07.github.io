@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa Solidária</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body class="home-body">
+
+    <button type="button" id="btn-theme" class="home-theme btn btn--icon" title="Modo escuro" aria-label="Modo escuro">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+
+    <main class="home">
+        <div class="home__hero">
+            <span class="home__emoji" aria-hidden="true">🎟️</span>
+            <h1>Rifa Solidária</h1>
+            <p class="home__prize">Prêmio: Caixa de Som JBL</p>
+            <p class="home__date">Sorteio: 30/06/2026</p>
+        </div>
+
+        <p class="home__intro">Escolha como deseja acessar o sistema:</p>
+
+        <div class="home__cards">
+            <a href="comprador.html" class="home-card home-card--buyer">
+                <span class="home-card__icon" aria-hidden="true">🛒</span>
+                <h2>Comprador</h2>
+                <p>Consulte cotas livres, reservadas e vendidas. Faça sua reserva online.</p>
+                <span class="home-card__badge home-card__badge--free">Sem login</span>
+                <span class="home-card__action">Acessar →</span>
+            </a>
+
+            <a href="admin.html" class="home-card home-card--admin">
+                <span class="home-card__icon" aria-hidden="true">🔐</span>
+                <h2>Administrador</h2>
+                <p>Gerencie cotas, pagamentos, compradores e relatórios da rifa.</p>
+                <span class="home-card__badge home-card__badge--auth">Com senha</span>
+                <span class="home-card__action">Entrar →</span>
+            </a>
+        </div>
+
+        <footer class="home__footer">
+            <p>Sistema de rifa · Consulta pública e gestão profissional</p>
+        </footer>
+    </main>
+
+    <script>
+        (function () {
+            var btn = document.getElementById('btn-theme');
+            if (localStorage.getItem('rifa-theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            btn.addEventListener('click', function () {
+                var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (dark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('rifa-theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('rifa-theme', 'dark');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
