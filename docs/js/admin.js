@@ -375,8 +375,10 @@
     function showAdmin() {
         loginScreen.hidden = true;
         adminApp.hidden = false;
-        loadData().catch(function () {
-            loginError.textContent = 'Erro ao carregar dados.';
+        loadData().catch(function (err) {
+            showLogin();
+            var msg = (err && err.message) || 'Erro ao carregar dados.';
+            loginError.textContent = msg;
             loginError.hidden = false;
         });
     }
@@ -561,6 +563,11 @@
             .then(function (result) {
                 if (result.error) {
                     loginError.textContent = result.error.message || 'E-mail ou senha incorretos.';
+                    loginError.hidden = false;
+                    return;
+                }
+                if (!result.data || !result.data.session) {
+                    loginError.textContent = 'Usuário não confirmado. No Supabase: Authentication → Users → confirme o e-mail.';
                     loginError.hidden = false;
                     return;
                 }

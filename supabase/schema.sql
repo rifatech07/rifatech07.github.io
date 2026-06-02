@@ -234,6 +234,28 @@ BEGIN
 END;
 $$;
 
+-- Lista cotas para o admin (SECURITY DEFINER — contorna bloqueio da Data API na tabela)
+CREATE OR REPLACE FUNCTION admin_list_cotas()
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  v_cotas JSONB;
+BEGIN
+  IF auth.uid() IS NULL THEN
+    RETURN jsonb_build_object('ok', false, 'erro', 'Não autorizado. Faça login novamente.');
+  END IF;
+
+  SELECT COALESCE(jsonb_agg(to_jsonb(c) ORDER BY c.cota), '[]'::jsonb)
+  INTO v_cotas
+  FROM cotas c;
+
+  RETURN jsonb_build_object('ok', true, 'cotas', v_cotas);
+END;
+$$;
+
 -- RLS
 ALTER TABLE cotas ENABLE ROW LEVEL SECURITY;
 
@@ -243,11 +265,14 @@ CREATE POLICY cotas_admin_all ON cotas
   USING (true)
   WITH CHECK (true);
 
--- Permissões
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
-GRANT SELECT ON cotas_public TO anon, authenticated;
-GRANT ALL ON cotas TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE public.cotas TO authenticated;
+GRANT SELECT ON TABLE public.cotas TO anon;
+GRANT SELECT ON TABLE public.cotas_public TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION reservar_cota(TEXT, TEXT, TEXT) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION confirmar_pagamento(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION admin_reset_all() TO authenticated;
 GRANT EXECUTE ON FUNCTION admin_bulk_status(TEXT[], TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION admin_list_cotas() TO authenticated;
+
+NOTIFY pgrst, 'reload schema';

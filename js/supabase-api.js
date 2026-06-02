@@ -16,7 +16,13 @@
         if (!global.supabase) {
             throw new Error('Biblioteca Supabase não carregada.');
         }
-        client = global.supabase.createClient(c.supabaseUrl, c.supabaseAnonKey);
+        client = global.supabase.createClient(c.supabaseUrl, c.supabaseAnonKey, {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: false
+            }
+        });
         return client;
     }
 
@@ -87,14 +93,19 @@
         },
 
         fetchCotasAdmin: function () {
-            return getClient()
-                .from('cotas')
-                .select('*')
-                .order('cota')
-                .then(function (res) {
-                    if (res.error) throw res.error;
-                    return (res.data || []).map(adminRow);
-                });
+            return getClient().auth.getSession().then(function (sessionRes) {
+                if (!sessionRes.data || !sessionRes.data.session) {
+                    throw new Error('Sessão não encontrada. Faça login novamente.');
+                }
+                return getClient().rpc('admin_list_cotas');
+            }).then(function (res) {
+                if (res.error) throw res.error;
+                var body = res.data;
+                if (!body || !body.ok) {
+                    throw new Error((body && body.erro) || 'Erro ao carregar cotas.');
+                }
+                return (body.cotas || []).map(adminRow);
+            });
         },
 
         confirmarPagamento: function (cota) {
