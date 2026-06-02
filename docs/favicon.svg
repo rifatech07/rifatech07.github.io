@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Rifa">
+  <rect width="32" height="32" rx="7" fill="#1e293b"/>
+  <path fill="#22c55e" d="M7 11h18a2 2 0 0 1 2 2v1.2a2.2 2.2 0 1 1 0 4.4V21a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-1.2a2.2 2.2 0 1 1 0-4.4V13a2 2 0 0 1 2-2z"/>
+  <circle cx="11" cy="16" r="1.1" fill="#1e293b"/>
+  <circle cx="16" cy="16" r="1.1" fill="#1e293b"/>
+  <circle cx="21" cy="16" r="1.1" fill="#1e293b"/>
+</svg>
