@@ -29,7 +29,7 @@
             <p class="form-error" id="login-error" hidden></p>
             <button type="submit" class="btn btn--secondary btn--block">Entrar</button>
             <button type="button" class="login-help-link" data-help-trigger>Precisa de ajuda?</button>
-            <a href="https://rifatech07.github.io/index.html" data-site-home class="btn-back">
+            <a href="index.html" data-site-home class="btn-back">
                 <svg class="btn-back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
@@ -86,17 +86,33 @@
             <div class="admin-settings__head">
                 <div>
                     <h2>Configurações da rifa</h2>
-                    <p class="admin-settings__sub">WhatsApp, prêmio, valor da cota e data do sorteio</p>
+                    <p class="admin-settings__sub">WhatsApp, chave PIX, prêmio, valor da cota e data do sorteio</p>
                 </div>
                 <button type="button" id="btn-settings-toggle" class="btn btn--ghost btn--sm" aria-expanded="true">Ocultar</button>
             </div>
             <form id="form-rifa-config" class="admin-settings__form">
-                <div class="admin-settings__grid">
+                <div class="admin-settings__row admin-settings__row--contact">
                     <div class="field">
                         <label for="cfg-whatsapp">WhatsApp para pagamento</label>
                         <input type="tel" id="cfg-whatsapp" required inputmode="numeric" autocomplete="tel" placeholder="5531982635834">
-                        <span class="field-hint">Somente números: DDI + DDD + celular (ex.: 5531982635834)</span>
+                        <span class="field-hint">DDI + DDD + celular (só números)</span>
                     </div>
+                    <div class="field pix-config">
+                        <label for="cfg-chave-pix-tipo">Chave PIX</label>
+                        <div class="pix-config__row">
+                            <select id="cfg-chave-pix-tipo" aria-describedby="cfg-chave-pix-hint">
+                                <option value="">Não exibir</option>
+                                <option value="telefone">Telefone</option>
+                                <option value="email">E-mail</option>
+                                <option value="cpf">CPF</option>
+                                <option value="aleatoria">Chave aleatória</option>
+                            </select>
+                            <input type="text" id="cfg-chave-pix" maxlength="120" autocomplete="off" placeholder="Selecione o tipo acima">
+                        </div>
+                        <span class="field-hint" id="cfg-chave-pix-hint">Tipo + chave · botão copiar no modal</span>
+                    </div>
+                </div>
+                <div class="admin-settings__row admin-settings__row--meta">
                     <div class="field">
                         <label for="cfg-premio">Prêmio / o que está sendo rifado</label>
                         <input type="text" id="cfg-premio" required maxlength="120" placeholder="Caixa de Som JBL">
@@ -258,6 +274,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/home-links.js"></script>
+    <script src="js/pix-config.js"></script>
     <script src="js/supabase-api.js"></script>
     <script src="js/help-faq.js" data-faq="admin"></script>
     <script src="js/admin.js"></script>

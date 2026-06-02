@@ -4,7 +4,7 @@
     function defaults() {
         return global.RifaAPI && global.RifaAPI.configDefaults
             ? Object.assign({}, global.RifaAPI.configDefaults)
-            : { whatsapp: '5531982635834', premio: 'Caixa de Som JBL', valor_cota: 'R$ 10,00', data_sorteio: '30/06/2026' };
+            : { whatsapp: '5531982635834', premio: 'Caixa de Som JBL', valor_cota: 'R$ 10,00', data_sorteio: '30/06/2026', chave_pix: '', chave_pix_tipo: '' };
     }
 
     function subtitleText(c) {

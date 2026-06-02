@@ -5,7 +5,9 @@
         whatsapp: '5531982635834',
         premio: 'Caixa de Som JBL',
         valor_cota: 'R$ 10,00',
-        data_sorteio: '30/06/2026'
+        data_sorteio: '30/06/2026',
+        chave_pix: '',
+        chave_pix_tipo: ''
     };
     const STORAGE_RESERVAS = 'rifa-minhas-reservas';
     const REFRESH_MS = 15000;
@@ -73,6 +75,10 @@
     const sucessoMsg = document.getElementById('sucesso-msg');
     const btnWhatsappPagar = document.getElementById('btn-whatsapp-pagar');
     const btnSucessoFechar = document.getElementById('btn-sucesso-fechar');
+    const modalPixBox = document.getElementById('modal-pix-box');
+    const modalPixLabel = document.getElementById('modal-pix-label');
+    const modalPixValue = document.getElementById('modal-pix-value');
+    const btnCopyPix = document.getElementById('btn-copy-pix');
     const sucessoId = document.getElementById('sucesso-id');
     const sucessoIdCode = document.getElementById('sucesso-id-code');
 
@@ -682,10 +688,45 @@
                 '?text=' + encodeURIComponent('Olá! Gostaria de reservar uma cota da rifa.');
     }
 
+    function updateModalPix() {
+        if (!modalPixBox || !modalPixValue) return;
+        var Pix = window.RifaPixConfig;
+        if (Pix && !Pix.shouldShow(rifaConfig)) {
+            modalPixBox.hidden = true;
+            return;
+        }
+        var tipo = Pix.effectiveTipo(rifaConfig);
+        var key = rifaConfig.chave_pix;
+        if (modalPixLabel && Pix) {
+            modalPixLabel.textContent = 'Chave PIX · ' + Pix.labelTipo(tipo);
+        }
+        modalPixValue.textContent = Pix.formatDisplay(tipo, key);
+        modalPixBox.hidden = false;
+    }
+
+    function copyPixKey() {
+        var key = String(rifaConfig.chave_pix || '').trim();
+        if (!key) return;
+        function onCopied() {
+            if (!btnCopyPix) return;
+            var prev = btnCopyPix.title;
+            btnCopyPix.title = 'Copiado!';
+            setTimeout(function () { btnCopyPix.title = prev || 'Copiar chave PIX'; }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(key).then(onCopied).catch(function () {
+                window.prompt('Copie a chave PIX:', key);
+            });
+        } else {
+            window.prompt('Copie a chave PIX:', key);
+        }
+    }
+
     function applyRifaConfig(cfg) {
         rifaConfig = cfg || rifaConfig;
         if (window.RifaPublic) RifaPublic.apply(rifaConfig);
         initWhatsApp();
+        updateModalPix();
     }
 
     function loadRifaConfig() {
@@ -724,6 +765,7 @@
         });
     }
     btnTheme.addEventListener('click', toggleTheme);
+    if (btnCopyPix) btnCopyPix.addEventListener('click', copyPixKey);
     btnReservar.addEventListener('click', function () { openModal(); });
     btnRetomar.addEventListener('click', function () { openRetomarModal(); });
     retomarClose.addEventListener('click', closeRetomarModal);

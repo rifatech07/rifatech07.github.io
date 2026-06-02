@@ -6,11 +6,19 @@ CREATE TABLE IF NOT EXISTS rifa_config (
   premio TEXT NOT NULL DEFAULT 'Caixa de Som JBL',
   valor_cota TEXT NOT NULL DEFAULT 'R$ 10,00',
   data_sorteio TEXT NOT NULL DEFAULT '30/06/2026',
+  chave_pix TEXT NOT NULL DEFAULT '',
+  chave_pix_tipo TEXT NOT NULL DEFAULT '',
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 
 ALTER TABLE rifa_config
   ADD COLUMN IF NOT EXISTS valor_cota TEXT NOT NULL DEFAULT 'R$ 10,00';
+
+ALTER TABLE rifa_config
+  ADD COLUMN IF NOT EXISTS chave_pix TEXT NOT NULL DEFAULT '';
+
+ALTER TABLE rifa_config
+  ADD COLUMN IF NOT EXISTS chave_pix_tipo TEXT NOT NULL DEFAULT '';
 
 INSERT INTO rifa_config (id, whatsapp, premio, valor_cota, data_sorteio)
 VALUES (1, '5531982635834', 'Caixa de Som JBL', 'R$ 10,00', '30/06/2026')

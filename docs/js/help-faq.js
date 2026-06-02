@@ -9,7 +9,7 @@
             items: [
                 {
                     q: 'Como reservo uma cota?',
-                    a: 'Clique em <strong>Reservar cota</strong> no topo ou no botão <strong>Reservar</strong> na linha de uma cota livre. Preencha nome completo e WhatsApp. A cota fica <strong>Reservada</strong> até o organizador confirmar o pagamento.'
+                    a: 'Clique em <strong>Reservar cota</strong> no topo ou no botão <strong>Reservar</strong> na linha de uma cota livre. No modal você vê a <strong>chave PIX</strong> (se configurada) para copiar, depois preenche nome e WhatsApp. A cota fica <strong>Reservada</strong> até o organizador confirmar o pagamento.'
                 },
                 {
                     q: 'Já reservei. Como envio o pagamento?',
@@ -51,7 +51,7 @@
                 },
                 {
                     q: 'Configurações da rifa',
-                    a: 'Em <strong>Configurações</strong> altere WhatsApp, prêmio, valor da cota e data do sorteio. Clique em <strong>Salvar configurações</strong> — os textos aparecem na área do comprador.'
+                    a: 'Em <strong>Configurações</strong> altere WhatsApp, <strong>chave PIX</strong> (tipo: telefone, e-mail, CPF ou aleatória), prêmio, valor e data do sorteio. Clique em <strong>Salvar configurações</strong>.'
                 },
                 {
                     q: 'Como adicionar outro administrador?',

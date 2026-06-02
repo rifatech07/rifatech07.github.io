@@ -285,6 +285,8 @@ CREATE TABLE IF NOT EXISTS rifa_config (
   premio TEXT NOT NULL DEFAULT 'Caixa de Som JBL',
   valor_cota TEXT NOT NULL DEFAULT 'R$ 10,00',
   data_sorteio TEXT NOT NULL DEFAULT '30/06/2026',
+  chave_pix TEXT NOT NULL DEFAULT '',
+  chave_pix_tipo TEXT NOT NULL DEFAULT '',
   updated_at TIMESTAMPTZ DEFAULT now()
 );
 

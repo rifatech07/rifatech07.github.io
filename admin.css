@@ -170,18 +170,51 @@ body:not(.admin-logged-in) #admin-app {
     color: var(--text-muted);
 }
 
-.admin-settings__grid {
+.admin-settings__row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 14px 16px;
+    margin-bottom: 14px;
+}
+
+.admin-settings__row--contact {
+    grid-template-columns: minmax(200px, 0.85fr) minmax(260px, 1.15fr);
+    align-items: start;
+}
+
+.admin-settings__row--meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-settings__row .field {
+    margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+    .admin-settings__row--contact {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-settings__row--meta {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+    .admin-settings__row--meta {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .admin-settings__row--meta .field:last-child {
+        grid-column: 1 / -1;
+    }
 }
 
 .field-hint {
     display: block;
-    margin-top: 6px;
-    font-size: 0.75rem;
+    margin-top: 4px;
+    font-size: 0.6875rem;
     color: var(--text-muted);
+    line-height: 1.35;
 }
 
 .admin-topbar__left {
@@ -615,6 +648,48 @@ body:not(.admin-logged-in) #admin-app {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px 14px;
+}
+
+.pix-config__row {
+    display: grid;
+    grid-template-columns: minmax(118px, 130px) 1fr;
+    gap: 8px;
+    align-items: start;
+}
+
+.pix-config__row select,
+.pix-config__row input {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.875rem;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.pix-config__row select:focus,
+.pix-config__row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.pix-config__row input:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background: var(--surface-2);
+}
+
+.pix-config__row input:not(:disabled) {
+    background: var(--surface);
+}
+
+@media (max-width: 520px) {
+    .pix-config__row {
+        grid-template-columns: 1fr;
+    }
 }
 
 .field--full {

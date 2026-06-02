@@ -4,6 +4,7 @@
   "description": "Rifa solidária — GitHub Pages + Supabase",
   "private": true,
   "scripts": {
-    "sync-docs": "powershell -ExecutionPolicy Bypass -File sync-docs.ps1"
+    "sync-docs": "powershell -ExecutionPolicy Bypass -File sync-docs.ps1",
+    "serve": "npx --yes serve . -l 5173"
   }
 }

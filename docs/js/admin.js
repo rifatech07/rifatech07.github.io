@@ -65,6 +65,9 @@
     const cfgPremio = document.getElementById('cfg-premio');
     const cfgValorCota = document.getElementById('cfg-valor-cota');
     const cfgDataSorteio = document.getElementById('cfg-data-sorteio');
+    const cfgChavePixTipo = document.getElementById('cfg-chave-pix-tipo');
+    const cfgChavePix = document.getElementById('cfg-chave-pix');
+    const cfgChavePixHint = document.getElementById('cfg-chave-pix-hint');
     const cfgError = document.getElementById('cfg-error');
     const btnSettingsToggle = document.getElementById('btn-settings-toggle');
     const adminSettings = document.getElementById('admin-settings');
@@ -367,6 +370,35 @@
         bindAdminRowActions(tbody);
     }
 
+    function syncPixConfigFields(clearValueIfHidden) {
+        if (!cfgChavePixTipo || !cfgChavePix) return;
+        var tipo = cfgChavePixTipo.value;
+        var Pix = window.RifaPixConfig;
+        var ativo = !!tipo;
+        cfgChavePix.disabled = !ativo;
+        cfgChavePix.readOnly = false;
+        if (!ativo) {
+            if (clearValueIfHidden) cfgChavePix.value = '';
+            if (cfgChavePixHint && Pix) cfgChavePixHint.textContent = Pix.hint('');
+            return;
+        }
+        if (Pix) {
+            cfgChavePix.placeholder = Pix.placeholder(tipo);
+            if (cfgChavePixHint) cfgChavePixHint.textContent = Pix.hint(tipo);
+        }
+    }
+
+    function applyPixConfigToForm(cfg) {
+        if (!cfgChavePixTipo || !cfgChavePix) return;
+        var Pix = window.RifaPixConfig;
+        var valor = String(cfg.chave_pix || '').trim();
+        var tipo = String(cfg.chave_pix_tipo || '').trim();
+        if (!tipo && valor && Pix) tipo = Pix.inferTipo(valor);
+        cfgChavePixTipo.value = tipo;
+        cfgChavePix.value = valor;
+        syncPixConfigFields(false);
+    }
+
     function loadRifaConfigAdmin() {
         if (!formRifaConfig) return Promise.resolve();
         return RifaAPI.fetchRifaConfig().then(function (cfg) {
@@ -374,12 +406,14 @@
             cfgPremio.value = cfg.premio || '';
             cfgValorCota.value = cfg.valor_cota || '';
             cfgDataSorteio.value = cfg.data_sorteio || '';
+            applyPixConfigToForm(cfg);
         }).catch(function () {
             var d = RifaAPI.configDefaults || {};
             cfgWhatsapp.value = d.whatsapp || '';
             cfgPremio.value = d.premio || '';
             cfgValorCota.value = d.valor_cota || '';
             cfgDataSorteio.value = d.data_sorteio || '';
+            applyPixConfigToForm(d);
         });
     }
 
@@ -390,7 +424,9 @@
             whatsapp: cfgWhatsapp.value.trim(),
             premio: cfgPremio.value.trim(),
             valor_cota: cfgValorCota.value.trim(),
-            data_sorteio: cfgDataSorteio.value.trim()
+            data_sorteio: cfgDataSorteio.value.trim(),
+            chave_pix_tipo: cfgChavePixTipo ? cfgChavePixTipo.value : '',
+            chave_pix: cfgChavePix ? cfgChavePix.value.trim() : ''
         }).then(function (result) {
             if (!result.ok) {
                 cfgError.textContent = result.erro || 'Erro ao salvar.';
@@ -398,6 +434,8 @@
                 return;
             }
             showToast('Configurações salvas!');
+            if (result.body) applyPixConfigToForm(result.body);
+            else loadRifaConfigAdmin();
         }).catch(function (err) {
             cfgError.textContent = (err && err.message) || 'Erro ao salvar configurações.';
             cfgError.hidden = false;
@@ -709,6 +747,11 @@
     formCota.addEventListener('submit', saveCota);
     fStatus.addEventListener('change', toggleCompradorRequired);
     if (formRifaConfig) formRifaConfig.addEventListener('submit', saveRifaConfig);
+    if (cfgChavePixTipo) {
+        cfgChavePixTipo.addEventListener('change', function () {
+            syncPixConfigFields(true);
+        });
+    }
     if (btnSettingsToggle && adminSettings) {
         btnSettingsToggle.addEventListener('click', function () {
             var collapsed = adminSettings.classList.toggle('admin-settings--collapsed');

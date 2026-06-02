@@ -1287,6 +1287,46 @@ body.modal-open {
     font-weight: 600;
 }
 
+.modal-pix {
+    margin-bottom: 14px;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.modal-pix__label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.modal-pix__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-pix__value {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.875rem;
+    font-style: italic;
+    color: var(--text-muted);
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.modal-pix__copy {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+}
+
 .field {
     margin-bottom: 14px;
 }
