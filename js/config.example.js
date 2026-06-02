@@ -3,5 +3,6 @@
 
 window.RIFA_CONFIG = {
   supabaseUrl: 'https://SEU-PROJETO.supabase.co',
-  supabaseAnonKey: 'SUA-CHAVE-ANON-AQUI'
+  supabaseAnonKey: 'SUA-CHAVE-ANON-AQUI',
+  siteHome: 'https://rifatech07.github.io/index.html'
 };

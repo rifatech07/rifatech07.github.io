@@ -185,7 +185,8 @@ BEGIN
 
   UPDATE cotas
   SET comprador = '', whatsapp = '', identificador = '',
-      status = 'LIVRE', pagamento = '', reservado_em = NULL;
+      status = 'LIVRE', pagamento = '', reservado_em = NULL
+  WHERE true;
   GET DIAGNOSTICS n = ROW_COUNT;
 
   RETURN jsonb_build_object('ok', true, 'mensagem', 'Todas as cotas foram liberadas.', 'total', n);
